@@ -103,9 +103,6 @@ public class PackageActivity extends Activity implements AbsListView.OnScrollLis
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 PackageInfo p=packagelist.get(position);
                 Intent intent=new Intent();
-                //setClass()的第一个参数是packagecontext，第二个参数是一个class对象（在当前场景下应该传入需要被启动的Activity的对象）
-                //packagecontext对象就是当前Activity的对象（context是个类，Activity是它的子类）
-                //MainActivity.this表示使用的是外部类的对象，而不是这个类的对象
                 intent.setClass(PackageActivity.this,PackageShow.class);
                 intent.putExtra("com.whuzfb.myapplication.packageInfo",getSingleAppInfo(p));
                 startActivity(intent);
