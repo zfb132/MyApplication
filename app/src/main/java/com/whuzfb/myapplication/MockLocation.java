@@ -164,19 +164,19 @@ public class MockLocation extends Activity {
 //      getSSID()  获取SSID
 //      getSupplicanState()  获取具体客户端状态的信息
         String sb = "";
-        sb=sb+"\n获取WiFi状态：" + wifiManager.getWifiState();
-        sb=sb+"\n获取BSSID属性（所连接的WIFI设备的MAC地址）：" + wifiInfo.getBSSID();
+        sb=sb+"\nWiFi状态：" + wifiManager.getWifiState();
+        sb=sb+"\n\nBSSID（WIFI设备MAC地址）：" + wifiInfo.getBSSID();
 //      sb.append("getDetailedStateOf()  获取客户端的连通性：");
-        sb=sb+"\n\n获取SSID 是否被隐藏："+ wifiInfo.getHiddenSSID();
+        sb=sb+"\n\nSSID 是否被隐藏："+ wifiInfo.getHiddenSSID();
         //sb=sb+"\n获取DHCP地址：" + wifiManager.getDhcpInfo();
-        sb=sb+"\n\n获取IP 地址：" + ipIntToString(wifiInfo.getIpAddress());
+        sb=sb+"\n\nIP 地址：" + ipIntToString(wifiInfo.getIpAddress());
         //sb=sb+"\n\n获取IP 地址：" + ipIntToString(wifiManager.getDhcpInfo().ipAddress);
-        sb=sb+"\n\n获取DNS1：" + ipIntToString(wifiManager.getDhcpInfo().dns1);
-        sb=sb+"\n\n获取DNS2：" + ipIntToString(wifiManager.getDhcpInfo().dns2);
-        sb=sb+"\n\n获取网关地址：" + ipIntToString(wifiManager.getDhcpInfo().gateway);
-        sb=sb+"\n\n获取服务器地址：" + ipIntToString(wifiManager.getDhcpInfo().serverAddress);
+        sb=sb+"\n\nDNS1：" + ipIntToString(wifiManager.getDhcpInfo().dns1);
+        sb=sb+"\n\nDNS2：" + ipIntToString(wifiManager.getDhcpInfo().dns2);
+        sb=sb+"\n\n网关地址：" + ipIntToString(wifiManager.getDhcpInfo().gateway);
+        sb=sb+"\n\n服务器地址：" + ipIntToString(wifiManager.getDhcpInfo().serverAddress);
         //sb=sb+"\n获取BSSID属性（所连接的WIFI设备的MAC地址）：" + wifiManager.getConfiguredNetworks();
-        sb=sb+"\n获取扫描列表：";
+        sb=sb+"\n当前可用WIFI：";
         try{
             for(int i=0;i<wifiManager.getScanResults().size();i++){
                 sb=sb+"\n"+wifiManager.getScanResults().get(i);
@@ -184,18 +184,18 @@ public class MockLocation extends Activity {
         }catch (Exception e){
             e.printStackTrace();
         }
-        sb=sb+"\n\n获取连接的速度：" + wifiInfo.getLinkSpeed();
-        sb=sb+"\n\n获取Mac 地址（手机本身网卡的MAC地址）：" + wifiInfo.getMacAddress();
+        sb=sb+"\n\n连接的速度：" + wifiInfo.getLinkSpeed();
+        sb=sb+"\n\n手机Mac 地址:" + wifiInfo.getMacAddress();
         try{
-            sb=sb+"\n\n获取频率：" + wifiInfo.getFrequency();
+            sb=sb+"\n\n频率：" + wifiInfo.getFrequency();
         }catch (Exception e){
             e.printStackTrace();
         }
 
-        sb=sb+"\n\n获取网络ID：" + wifiInfo.getNetworkId();
-        sb=sb+"\n\n获取信号质量(满格为5)：" + wifiManager.calculateSignalLevel(wifiInfo.getRssi(),5);
-        sb=sb+"\n\n获取SSID（所连接的WIFI的网络名称）：" + wifiInfo.getSSID();
-        sb=sb+"\n\n获取具体客户端状态的信息：" + wifiInfo.getSupplicantState();
+        sb=sb+"\n\n网络ID：" + wifiInfo.getNetworkId();
+        sb=sb+"\n\n信号质量(满格为10)：" + wifiManager.calculateSignalLevel(wifiInfo.getRssi(),10);
+        sb=sb+"\n\nWIFI的网络SSID：" + wifiInfo.getSSID();
+        sb=sb+"\n\n客户端状态：" + wifiInfo.getSupplicantState();
         return sb;
     }
 
