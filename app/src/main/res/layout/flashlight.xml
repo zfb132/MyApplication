@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/starsky"
+    android:scaleType="fitXY">
+    <ImageView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:id="@+id/imageView_flashlight"
+        android:src="@drawable/tran_flashlight"/>
+    <ImageView
+        android:contentDescription="内容描述"
+        android:id="@+id/imageview_flashlight_controller"
+        android:layout_marginTop="56dp"
+        android:layout_width="50dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:onClick="onClick_Flashlight"
+        android:background="#666495ED" />
+</FrameLayout>

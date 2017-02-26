@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.whuzfb.myapplication">
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcherb"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:persistent="true"
+        android:theme="@style/AppTheme">
+
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".LinearTestAActivity"
+            android:label="@string/app_activity_2">
+        </activity>
+
+        <activity
+        android:name=".SpinnerActivity"
+        android:label="@string/app_activity_3">
+        </activity>
+
+        <activity
+            android:name=".AutoCompleteImageViewActivity"
+            android:label="@string/app_activity_4">
+        </activity>
+
+        <activity
+            android:name=".GalleryImageSwitcherActivity"
+            android:label="@string/app_activity_5">
+        </activity>
+
+        <activity
+            android:name=".GridViewActivity"
+            android:label="@string/app_activity_6">
+        </activity>
+
+        <activity
+            android:name=".WebViewActivity"
+            android:label="@string/app_activity_7">
+        </activity>
+
+        <activity
+            android:name=".TabViewActivity"
+            android:label="@string/app_activity_8">
+        </activity>
+
+        <activity
+            android:name=".BitmapActivity"
+            android:label="@string/app_activity_9">
+        </activity>
+
+        <activity
+            android:name=".EventListenerActivity"
+            android:label="@string/app_activity_10">
+        </activity>
+
+        <activity
+            android:name=".InnerIntentActivity"
+            android:label="@string/app_activity_11">
+        </activity>
+
+        <activity
+            android:name=".FlashLight"
+            android:label="@string/app_activity_12">
+        </activity>
+
+        <activity
+            android:name=".SensorActivity"
+            android:label="@string/app_activity_13">
+        </activity>
+
+        <activity
+            android:name=".GpsActivity"
+            android:label="@string/app_activity_14">
+        </activity>
+
+        <activity
+            android:name=".MockLocation"
+            android:label="@string/app_activity_15">
+        </activity>
+
+        <activity
+            android:name=".PackageActivity"
+            android:label="@string/app_activity_16">
+        </activity>
+
+        <activity
+            android:name=".PackageShow"
+            android:label="@string/app_activity_17">
+        </activity>
+
+        <service android:name=".FirstLocalService" />
+        <service android:name=".MyAudioService" />
+
+        <receiver android:name="SmsReceiver">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".AutoBootReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <category android:name="android.intent.category.HOME" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".MyDeviceAdmin"
+            android:label="@string/app_name"
+            android:description="@string/action_admin"
+            android:permission="android.permission.BIND_DEVICE_ADMIN">
+            <meta-data
+                android:name="android.app.device_admin"
+                android:resource="@xml/mydeviceadmin"
+                 />
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+    <uses-feature android:name="android.hardware.location.gps"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission xmlns:tools="http://schemas.android.com/tools"
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission xmlns:tools="http://schemas.android.com/tools"
+        android:name="android.permission.INTERNET"
+        tools:ignore="ProtectedPermissions" />
+</manifest>

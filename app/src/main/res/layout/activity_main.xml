@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.whuzfb.myapplication.MainActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:theme="@style/AppTheme.AppBarOverlay">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/content_main"
+        android:id="@+id/include" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@android:drawable/ic_dialog_email" />
+
+    <Button
+        android:text="按钮"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button"
+        app:layout_anchor="@+id/include"
+        app:layout_anchorGravity="center_vertical|left"
+        android:layout_gravity="center_vertical|right" />
+
+    <CheckBox
+        android:text="测试按钮B"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBox3"
+        app:layout_anchor="@+id/include"
+        app:layout_anchorGravity="center_vertical|right"
+        android:layout_gravity="bottom|left" />
+
+    <CheckBox
+        android:text="测试按钮A"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBox2"
+        app:layout_anchor="@+id/include"
+        app:layout_anchorGravity="center_vertical|right"
+        android:layout_gravity="top|left" />
+
+    <ToggleButton
+        android:text="开关"
+        android:layout_width="69dp"
+        android:layout_height="82dp"
+        android:id="@+id/toggleButton"
+        tools:text="切换"
+        app:layout_anchor="@+id/include"
+        app:layout_anchorGravity="top|right"
+        android:layout_gravity="bottom|left" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@+id/include"
+        app:layout_anchorGravity="bottom|left"
+        android:layout_gravity="top|right"
+        android:id="@+id/radiogroup1">
+
+        <RadioButton
+            android:text="单选按钮1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButton1"
+            app:layout_anchor="@+id/include" />
+
+        <RadioButton
+            android:text="单选按钮2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButton2"
+            app:layout_anchor="@+id/include"
+            app:layout_anchorGravity="bottom|left"
+            android:layout_gravity="top|right" />
+    </RadioGroup>
+
+
+
+
+</android.support.design.widget.CoordinatorLayout>

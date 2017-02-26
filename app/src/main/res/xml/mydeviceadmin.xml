@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<device-admin xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-policies>
+        <!--限制密码选择-->
+        <limit-password></limit-password>
+        <!--监控登录尝试-->
+        <watch-login></watch-login>
+        <!--密码重置-->
+        <reset-password></reset-password>
+        <!--锁定手机-->
+        <force-lock></force-lock>
+        <!--清除所有数据（恢复出厂设置）-->
+        <wipe-data></wipe-data>
+        <!--禁止所有应用使用相机-->
+        <disable-camera></disable-camera>
+        <!--禁用键盘锁-->
+        <disable-keyguard-features></disable-keyguard-features>
+        <!--加密存储-->
+        <encrypted-storage></encrypted-storage>
+        <!--密码过期-->
+        <expire-password></expire-password>
+        <!--设置全局代理-->
+        <set-global-proxy></set-global-proxy>
+    </uses-policies>
+</device-admin>

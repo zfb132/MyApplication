@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tabhost"
+    android:layout_width="fill_parent" android:layout_height="fill_parent">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+        <TabWidget
+            android:id="@android:id/tabs"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+
+        <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/scrollView_A"
+                android:background="#FFFACD">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="216dp"
+                        android:layout_height="384dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/guide_startpage"
+                        android:id="@+id/imageView_startpageA"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="12dp" />
+                    <TextView
+                        android:id="@+id/textviewA"
+                        android:textSize="20dp"
+                        android:textColor="#0A0A0A"
+                        android:text="第一个测试内容"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:layout_below="@+id/imageView_startpageA"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="12dp" />
+                </RelativeLayout>
+            </ScrollView>
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/scrollView_B"
+                android:background="#FFF0F5">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="216dp"
+                        android:layout_height="384dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/guide_testpage"
+                        android:id="@+id/imageView_startpageB1"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="12dp" />
+                    <TextView
+                        android:id="@+id/textviewB1"
+                        android:textSize="20dp"
+                        android:textColor="#0A0A0A"
+                        android:text="第一个测试内容"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:layout_below="@+id/imageView_startpageB1"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="12dp" />
+                    <!--放啥都可以，就是不能放ImageView，MDZZ-->
+
+                    <!--
+                    <ImageView
+                        android:layout_width="216dp"
+                        android:layout_height="384dp"
+                        android:layout_below="@+id/textviewB1"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/guide_switcher"
+                        android:id="@+id/imageView_startpageB2"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="12dp" />
+
+                    <TextView
+                        android:id="@+id/textviewB2"
+                        android:textSize="20dp"
+                        android:textColor="#0A0A0A"
+                        android:text="第二个测试内容"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imageView_startpageB2"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="12dp" />
+
+                    <ImageView
+                        android:layout_width="216dp"
+                        android:layout_height="384dp"
+                        android:layout_below="@+id/textviewB2"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/guide_button"
+                        android:id="@+id/imageView_startpageB3"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="12dp" />
+                    <TextView
+                        android:id="@+id/textviewB3"
+                        android:textSize="20dp"
+                        android:textColor="#0A0A0A"
+                        android:text="第三个测试内容"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imageView_startpageB3"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="12dp" />
+                    <ImageView
+                        android:layout_width="216dp"
+                        android:layout_height="384dp"
+                        android:layout_below="@+id/textviewB3"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/guide_switcher"
+                        android:id="@+id/imageView_startpageB4"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="12dp" />
+                    <TextView
+                        android:id="@+id/textviewB4"
+                        android:textSize="20dp"
+                        android:textColor="#0A0A0A"
+                        android:text="第二个测试内容"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imageView_startpageB4"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="12dp" />
+                    <ImageView
+                        android:layout_width="216dp"
+                        android:layout_height="384dp"
+                        android:layout_below="@+id/textviewB4"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/guide_grid"
+                        android:id="@+id/imageView_startpageB5"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="12dp" />
+                    <TextView
+                        android:id="@+id/textviewB5"
+                        android:textSize="20dp"
+                        android:textColor="#0A0A0A"
+                        android:text="第二个测试内容"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imageView_startpageB5"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="12dp" />
+                    <ImageView
+                        android:layout_width="216dp"
+                        android:layout_height="384dp"
+                        android:layout_below="@+id/textviewB5"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/guide_web"
+                        android:id="@+id/imageView_startpageB6"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="12dp" />
+                    <TextView
+                        android:id="@+id/textviewB6"
+                        android:textSize="20dp"
+                        android:textColor="#0A0A0A"
+                        android:text="第二个测试内容"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imageView_startpageB6"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="12dp" />
+                    <ImageView
+                        android:layout_width="216dp"
+                        android:layout_height="384dp"
+                        android:layout_below="@+id/textviewB6"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/guide_bitmap"
+                        android:id="@+id/imageView_startpageB7"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="12dp" />
+                    <TextView
+                        android:id="@+id/textviewB7"
+                        android:textSize="20dp"
+                        android:textColor="#0A0A0A"
+                        android:text="第二个测试内容"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imageView_startpageB7"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="12dp" />
+                    <ImageView
+                        android:layout_width="216dp"
+                        android:layout_height="384dp"
+                        android:layout_below="@+id/textviewB7"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/guide_dialog"
+                        android:id="@+id/imageView_startpageB8"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="12dp" />
+                    <TextView
+                        android:id="@+id/textviewB8"
+                        android:textSize="20dp"
+                        android:textColor="#0A0A0A"
+                        android:text="第二个测试内容"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imageView_startpageB8"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="12dp" />
+                    <ImageView
+                        android:layout_width="216dp"
+                        android:layout_height="384dp"
+                        android:layout_below="@+id/textviewB8"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/guide_progressdialog"
+                        android:id="@+id/imageView_startpageB9"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="12dp" />
+                    <TextView
+                        android:id="@+id/textviewB9"
+                        android:textSize="20dp"
+                        android:textColor="#0A0A0A"
+                        android:text="第二个测试内容"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imageView_startpageB9"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="12dp" />
+                    <ImageView
+                        android:layout_width="216dp"
+                        android:layout_height="384dp"
+                        android:layout_below="@+id/textviewB9"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/guide_event"
+                        android:id="@+id/imageView_startpageB10"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="12dp" />
+                    <TextView
+                        android:id="@+id/textviewB10"
+                        android:textSize="20dp"
+                        android:textColor="#0A0A0A"
+                        android:text="第二个测试内容"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imageView_startpageB10"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="12dp" />
+                        -->
+                </RelativeLayout>
+            </ScrollView>
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/scrollView_C"
+                android:background="#FFBBFF">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="216dp"
+                        android:layout_height="384dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/guide_personpage"
+                        android:id="@+id/imageView_startpageC"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="12dp" />
+                    <TextView
+                        android:id="@+id/textviewC"
+                        android:textSize="20dp"
+                        android:textColor="#0A0A0A"
+                        android:text="第一个测试内容"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:layout_below="@+id/imageView_startpageC"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="12dp" />
+                </RelativeLayout>
+            </ScrollView>
+        </FrameLayout>
+    </LinearLayout>
+</TabHost>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/testa"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.whuzfb.myapplication.MainActivity"
+    tools:showIn="@layout/activity_main">
+
+    <CheckBox
+        android:text="按钮"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="207dp"
+        android:id="@+id/checkBox"
+        tools:text="button" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!"
+        android:textSize="20sp"
+        android:background="#00f600"
+        android:id="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="检测多选框是否被点击"
+        android:textSize="20sp"
+        android:background="#00f600"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView"
+        android:layout_marginTop="50dp"
+        android:id="@+id/textView2" />
+
+    <TextView
+        android:text="检测选中状态"
+        android:textSize="20sp"
+        android:background="#00f600"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView2"
+        android:layout_alignStart="@+id/textView"
+        android:layout_marginTop="53dp"
+        android:id="@+id/textView3" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        android:layout_alignTop="@+id/checkBox"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="31dp">
+
+
+        <TextView
+            android:text="用户登录"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView4"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:hint="密码"
+            android:id="@+id/editText4"
+            android:layout_below="@+id/editText"
+            android:layout_alignStart="@+id/editText" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="用户名"
+            android:ems="10"
+            android:layout_marginTop="9dp"
+            android:id="@+id/editText"
+            android:layout_below="@+id/textView4"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="登录"
+            android:id="@+id/button2"
+            android:layout_marginEnd="12dp"
+            android:layout_below="@+id/editText4"
+            android:layout_alignEnd="@+id/editText4" />
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:progress="0"
+            android:secondaryProgress="50"
+
+            android:id="@+id/progressBar2"
+
+            android:layout_alignParentTop="true" />
+    </RelativeLayout>
+
+    <TimePicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:theme="@android:style/Theme.Holo.Light"
+        android:id="@+id/timePicker2"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="29dp" />
+
+
+
+</RelativeLayout>
