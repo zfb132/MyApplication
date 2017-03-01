@@ -121,10 +121,8 @@ public class PackageActivity extends Activity implements AbsListView.OnScrollLis
     private void loadData(List<PackageInfo> appAll) {
         int count = adapter.getCount();
         ListItem item;
-
         if(adapter.getCount()==appAll.size())
             flag_end=true;
-
         for (int i = count; (i < count + 15)&&(i <appAll.size()); i++) {
             PackageInfo packageInfo = appAll.get(i);
             item = new ListItem();
@@ -135,7 +133,6 @@ public class PackageActivity extends Activity implements AbsListView.OnScrollLis
             item.setTitle("" + packageInfo.applicationInfo.loadLabel(pm));
             mList.add(item);
         }
-
     }
 
     public boolean isSystemApp(PackageInfo p){
@@ -170,7 +167,6 @@ public class PackageActivity extends Activity implements AbsListView.OnScrollLis
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
         this.viewItemCount = visibleItemCount;
         viewLastIndex = firstVisibleItem + visibleItemCount - 1;
-
     }
 
     //滑动状态改变时被调用
@@ -179,19 +175,17 @@ public class PackageActivity extends Activity implements AbsListView.OnScrollLis
         int itemsLastIndex = adapter.getCount() - 1;    //数据集最后一项的索引
         int lastIndex = itemsLastIndex + 1;             //加上底部的loadMoreView项
         if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && viewLastIndex == lastIndex) {
-            loadmore_text.setText("共"+(viewLastIndex+1)+"个应用");
             //自动加载,可以在这里放置异步加载数据
             loadData(packagelist);
+            if((viewLastIndex+1)==packagelist.size()){
+                loadmore_text.setText("共"+packagelist.size()+"个应用");
+            }else{
+                loadmore_text.setText("已加载"+(viewLastIndex+1)+"个应用");
+            }
             //数据集变化后,通知adapter
             adapter.notifyDataSetChanged();
             //设置选中项，如果不加这个flag则会导致最后一个时footview显示不全
             if(!flag_end){
-                if((viewLastIndex+1)==packagelist.size()){
-                    Toast.makeText(PackageActivity.this,"sssss",Toast.LENGTH_SHORT);
-                }else{
-
-                    loadmore_text.setText("已加载"+packagelist.size()+"个应用");
-                }
                 listView_packagename.setSelection(viewLastIndex - viewItemCount + 1);
             }
         }
@@ -204,8 +198,9 @@ public class PackageActivity extends Activity implements AbsListView.OnScrollLis
         pm = context.getPackageManager();
         //获取手机内所有应用
         // 这是曾经安装过但是卸载了的软件|MATCH_UNINSTALLED_PACKAGES
-        packagelist = pm.getInstalledPackages(PackageManager.GET_ACTIVITIES|GET_PERMISSIONS | GET_RECEIVERS | GET_SERVICES);
+        //packagelist = pm.getInstalledPackages(PackageManager.GET_ACTIVITIES|GET_PERMISSIONS | GET_RECEIVERS | GET_SERVICES);
 
+        packagelist=pm.getPreferredPackages(PackageManager.GET_ACTIVITIES|GET_PERMISSIONS | GET_RECEIVERS | GET_SERVICES);
         //获得应用的banner对象Drawable类型
         //pm.getApplicationBanner(packagename);
         //获得应用的设置int
