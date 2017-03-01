@@ -201,6 +201,7 @@ public class PackageActivity extends Activity implements AbsListView.OnScrollLis
         // 这是曾经安装过但是卸载了的软件|MATCH_UNINSTALLED_PACKAGES
         packagelist = pm.getInstalledPackages(PackageManager.GET_ACTIVITIES|GET_PERMISSIONS | GET_RECEIVERS | GET_SERVICES);
 
+        //packagelist=pm.getPreferredPackages(PackageManager.GET_ACTIVITIES|GET_PERMISSIONS | GET_RECEIVERS | GET_SERVICES);
         //获得应用的banner对象Drawable类型
         //pm.getApplicationBanner(packagename);
         //获得应用的设置int
