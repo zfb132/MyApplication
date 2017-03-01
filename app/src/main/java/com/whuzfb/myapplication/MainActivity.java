@@ -152,9 +152,6 @@ public class MainActivity extends AppCompatActivity {
             showToast("欢迎使用我的应用" ,Toast.LENGTH_SHORT);
             setinfo.edit().putBoolean("FIRST_RUN",false).commit();
         }
-
-
-
         stata=this;
 
         rg1=(RadioGroup)findViewById(R.id.radiogroup1);

@@ -84,7 +84,9 @@ public class PackageActivity extends Activity implements AbsListView.OnScrollLis
                 //数据集变化后,通知adapter
                 adapter.notifyDataSetChanged();
                 //回到顶部
-                listView_packagename.setSelection(0);
+                //listView_packagename.setSelection(0);
+                //平滑滑动到指定的适配器位置
+                listView_packagename.smoothScrollToPosition(0);
             }
         });
 
@@ -177,13 +179,19 @@ public class PackageActivity extends Activity implements AbsListView.OnScrollLis
         int itemsLastIndex = adapter.getCount() - 1;    //数据集最后一项的索引
         int lastIndex = itemsLastIndex + 1;             //加上底部的loadMoreView项
         if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && viewLastIndex == lastIndex) {
+            loadmore_text.setText("共"+(viewLastIndex+1)+"个应用");
             //自动加载,可以在这里放置异步加载数据
             loadData(packagelist);
             //数据集变化后,通知adapter
             adapter.notifyDataSetChanged();
             //设置选中项，如果不加这个flag则会导致最后一个时footview显示不全
             if(!flag_end){
-                loadmore_text.setText("共"+packagelist.size()+"个加载完毕");
+                if((viewLastIndex+1)==packagelist.size()){
+                    Toast.makeText(PackageActivity.this,"sssss",Toast.LENGTH_SHORT);
+                }else{
+
+                    loadmore_text.setText("已加载"+packagelist.size()+"个应用");
+                }
                 listView_packagename.setSelection(viewLastIndex - viewItemCount + 1);
             }
         }

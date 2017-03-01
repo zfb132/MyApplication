@@ -22,7 +22,7 @@
         android:id="@+id/fab_returntop"
         android:layout_width="wrap_content"
         android:layout_height="80dp"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        app:srcCompat="@drawable/arrow_up" />
 
 </LinearLayout>
 
