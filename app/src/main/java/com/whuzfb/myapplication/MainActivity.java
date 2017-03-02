@@ -1,6 +1,7 @@
 package com.whuzfb.myapplication;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -12,6 +13,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.PixelFormat;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -24,18 +26,25 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
+import android.text.format.Formatter;
+import android.util.DisplayMetrics;
 import android.view.ContextMenu;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.SubMenu;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -43,6 +52,10 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 import static android.telephony.TelephonyManager.CALL_STATE_IDLE;
 import static android.telephony.TelephonyManager.CALL_STATE_OFFHOOK;
@@ -224,6 +237,8 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+
     }
 
     class mytimechangedlistener implements TimePicker.OnTimeChangedListener{
@@ -243,6 +258,10 @@ public class MainActivity extends AppCompatActivity {
                 intenta.putExtra("com.whuzfb.myapplication.count",count);
                 intenta.putExtra("com.whuzfb.myapplication.time",new int[]{tp.getCurrentHour(),tp.getCurrentMinute()});
                 startActivity(intenta);
+            }else if(hourOfDay==9&&minute==9){
+                Intent mIntent = new Intent();
+                mIntent.setClass(MainActivity.this,FloatViewService.class);
+                startService(mIntent);
             }
         }
     }
@@ -610,9 +629,50 @@ public class MainActivity extends AppCompatActivity {
         info.append("数据连接状态："+judge_net_state(tm.getDataState())+System.getProperty("line.separator"));
         info.append("WIFI状态："+wifiConnect()+System.getProperty("line.separator"));
         info.append("网络连通状态："+netConnect()+System.getProperty("line.separator"));
+
+        //这种方式在service中无法使用，
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int width = dm.widthPixels;              //宽
+        int height = dm.heightPixels;           //高
+        /*在service中也能得到高和宽
+        WindowManager mWindowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        width = mWindowManager.getDefaultDisplay().getWidth();
+        height = mWindowManager.getDefaultDisplay().getHeight();
+        */
+        info.append("手机宽度（像素）："+width+System.getProperty("line.separator"));
+        info.append("手机高度（像素）："+height+System.getProperty("line.separator"));
+        info.append("手机总内存："+getTotalMemory()[0]+System.getProperty("line.separator"));
+        info.append("手机已用内存："+getTotalMemory()[1]+System.getProperty("line.separator"));
         info.append("\n\n\n");
         info.append("相关知识：\nIMSI国际移动用户识别码(International Mobile Subscriber Identify)，共有15位：MCC移动国家码（Mobile Country Code）+MNC移动网络码（Mobile Network Code）+MIN。其中，MCC共3位，中国为460；在中国，移动的代码为00和02，联通为01，电信为03\n\nIMEI国际移动设备标识(International Mobile Equipment Identify)，共有15位：TAC（型号核准代码）+FAC（最后装配号）+SNR（串号）+SP（校验码）。其中，TAC共6位，一般代表机型；FAC共2位，一般代表产地；SNR共6位，一般代表生产顺序号。");
         return info;
+    }
+
+    private String[] getTotalMemory() {
+        String[] result = {"",""};  //1-total 2-avail
+        ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
+        ActivityManager mActivityManager=(ActivityManager)getSystemService(Context.ACTIVITY_SERVICE);
+        mActivityManager.getMemoryInfo(mi);
+        long mTotalMem = 0;
+        long mAvailMem = mi.availMem;
+        String str1 = "/proc/meminfo";
+        String str2;
+        String[] arrayOfString;
+        try {
+            FileReader localFileReader = new FileReader(str1);
+            BufferedReader localBufferedReader = new BufferedReader(localFileReader, 8192);
+            str2 = localBufferedReader.readLine();
+            arrayOfString = str2.split("\\s+");
+            mTotalMem = Integer.valueOf(arrayOfString[1]).intValue() * 1024;
+            localBufferedReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        result[0] = Formatter.formatFileSize(this, mTotalMem);
+        result[1] = Formatter.formatFileSize(this, mAvailMem);
+        //Log.i(TAG, "meminfo total:" + result[0] + " used:" + result[1]);
+        return result;
     }
 
     public String judge_net_state(int num) {
@@ -791,4 +851,7 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
         super.onStop();
     }
+
+
+
 }
