@@ -287,7 +287,13 @@ public class LinearTestAActivity extends Activity {
                 startActivity(intent);
             }
         });
-
+        b22.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(LinearTestAActivity.this,NetLogin.class);
+                startActivity(intent);
+            }
+        });
 
 
 

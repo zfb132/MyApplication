@@ -135,8 +135,5 @@ public class FloatViewService extends Service {
             }
         });
 
-
-        //wm.addView(btn_floatView, params);
-        //isAdded = true;
     }
 }

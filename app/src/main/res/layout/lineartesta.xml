@@ -235,21 +235,21 @@
             android:id="@+id/button24" />
 
         <Button
-            android:text="传感器"
+            android:text="教务系统"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="3dp"
             android:id="@+id/button25" />
 
         <Button
-            android:text="GPS"
+            android:text="测试"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="3dp"
             android:id="@+id/button26" />
 
         <Button
-            android:text="模拟"
+            android:text="测试"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="3dp"

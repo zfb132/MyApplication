@@ -102,6 +102,11 @@
             android:label="@string/app_activity_17">
         </activity>
 
+        <activity
+            android:name=".NetLogin"
+            android:label="@string/app_activity_18">
+        </activity>
+
         <service android:name=".FirstLocalService" />
         <service android:name=".MyAudioService" />
         <service android:name=".FloatViewService" />
