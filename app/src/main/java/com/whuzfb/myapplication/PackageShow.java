@@ -3,6 +3,8 @@ package com.whuzfb.myapplication;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 /**
@@ -21,6 +23,9 @@ public class PackageShow extends Activity {
             text="未获取到任何信息";
         }
         TextView textView=(TextView)findViewById(R.id.textView_listitem_show);
+        EditText editText=(EditText)findViewById(R.id.edittext_useless);
+        editText.setText("");
+        editText.setVisibility(View.INVISIBLE);
         textView.setText(text);
 
     }

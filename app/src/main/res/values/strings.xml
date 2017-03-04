@@ -68,6 +68,12 @@
   6.<u>只要应用程序没有被系统关掉的情况下，应用会在收到短信时提示短信内容</u>\n
     </string>
 
+    <string-array name="web">
+        <item>课程表</item>
+        <item>个人信息</item>
+        <item>成绩</item>
+    </string-array>
+
     <string-array name="subject">
         <item>程序设计基础</item>
         <item>乒乓球（初级）</item>

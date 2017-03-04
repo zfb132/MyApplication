@@ -140,29 +140,47 @@
 
     </application>
 
+    <!-- 获得GPS -->
     <uses-feature android:name="android.hardware.location.gps"/>
+    <!-- 获得精确定位 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!-- 允许模拟位置（需要开发者选项配合） -->
     <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+    <!-- 获得大致位置 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 允许在其他窗口之上显示 -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-
+    <!-- 接收开机启动广播（需要系统管家配合） -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- 读取应用信息 -->
     <uses-permission xmlns:tools="http://schemas.android.com/tools"
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
+    <!-- 相机权限 -->
     <uses-permission android:name="android.permission.CAMERA" />
+    <!-- 允许使用闪光灯 -->
     <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <!-- 直接拨打电话 -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!-- 接收短信 -->
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <!-- 发送短信 -->
     <uses-permission android:name="android.permission.SEND_SMS" />
+    <!-- 读取短信 -->
     <uses-permission android:name="android.permission.READ_SMS" />
+    <!-- 读取手机联系人 -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!-- 读取存储卡 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- 写入存储卡 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 记录音频 -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-
+    <!-- 读取手机状态 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 获得网络状态 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 允许访问网络 -->
     <uses-permission xmlns:tools="http://schemas.android.com/tools"
         android:name="android.permission.INTERNET"
         tools:ignore="ProtectedPermissions" />
