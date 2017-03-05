@@ -138,7 +138,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginLeft="20dp"
-                    android:text="看不清"
+                    android:text="验证码"
                     android:textStyle="bold" />
 
                 <Button

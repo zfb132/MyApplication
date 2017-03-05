@@ -2,13 +2,17 @@ package com.whuzfb.myapplication;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -40,7 +45,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -65,11 +74,14 @@ public class NetLogin extends Activity {
     private Button btn_sourcecode;
     private ImageView img_checkcode;
     private Bitmap bm_checkCode;
+    private boolean flag_checkcode;
     private String COOKIE;
     private String token;
-    private String regex="&csrftoken=([\\S]{36})";
+    private String regex_token="&csrftoken=([\\S]{36})";
+    private String regex_score="<td>([0-9]{8,14})</td>\\s*<td>([ 0-9A-Z\\u4E00-\\u9FA5\\uff08\\uff09\\u0020]{4,20})</td>\\s*<td>([\\u4E00-\\u9FA5]{4})</td>\\s*<td>([0-9\\.]{3})</td>\\s*<td>([\\u4E00-\\u9FA5\\?]{2,3})</td>\\s*<td>([\\u4E00-\\u9FA5]{3,8})</td>\\s*<td>([\\u4E00-\\u9FA5]{2,3})</td>\\s*<td>([0-9]{4})</td>\\s*<td>([\\u4E00-\\u9FA5]{1})</td>\\s*<td>([0-9\\.]{4})</td>";
     private String url_webcode;
-    private String[] url_score={"http://210.42.121.241/servlet/Svlt_QueryStuScore?csrftoken=","&year=0&term=&learnType=&scoreFlag=0&t=Sat%20Mar%2004%202017%2017:49:29%20GMT+0800%20(%D6%D0%B9%FA%B1%EA%D7%BC%CA%B1%BC%E4)"};
+    private String[] url_score={"http://210.42.121.241/servlet/Svlt_QueryStuScore?csrftoken=","&year=0&term=&learnType=&scoreFlag=0&t=","(%D6%D0%B9%FA%B1%EA%D7%BC%CA%B1%BC%E4)"};
+    private String timestamp="";
     private String url_course="http://210.42.121.241/servlet/Svlt_QueryStuLsn?action=queryStuLsn&csrftoken=";
     private String url_info="http://210.42.121.241/stu/student_information.jsp";
     private String url_login="http://210.42.121.241/servlet/Login";
@@ -93,18 +105,24 @@ public class NetLogin extends Activity {
         btn_sourcecode = (Button) findViewById(R.id.btn_sourcecode);
         tv_result = (TextView) findViewById(R.id.tv_result);
         img_checkcode = (ImageView) findViewById(R.id.img);
-        new Thread(checkcodeGet).start();
+        //new Thread(checkcodeGet).start();
+        flag_checkcode=false;
 
+        //btn_changecode.setText("");
         //获取Shared Preference对象
         SharedPreferences setinfo=getPreferences(Activity.MODE_PRIVATE);
         //取出保存的用户名和密码分别赋给字符串String username,password
         String username=setinfo.getString("STUDYNUM","");
         String password=setinfo.getString("PASSWORD","");
+        COOKIE=setinfo.getString("COOKIE","");
+        token=setinfo.getString("TOKEN","");
         //将取出的信息写在对应的edittext
         //其中user=(EditText)findViewById(R.id.editText);
         //pwd同理
         et_user.setText(username);
         et_pwd.setText(password);
+
+
 
         btn_sourcecode.setOnClickListener(new OnClickListener() {
             @Override
@@ -116,8 +134,16 @@ public class NetLogin extends Activity {
         btn_changecode.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                et_check.setText("");
-                new Thread(checkcodeGet).start();
+                if(netConnect()){
+                    et_check.setText("");
+                    if(flag_checkcode){
+                        btn_changecode.setText("看不清");
+                    }
+                    new Thread(checkcodeGet).start();
+                    flag_checkcode=true;
+                }else{
+                    Toast.makeText(NetLogin.this,"请连接网络",Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -134,7 +160,11 @@ public class NetLogin extends Activity {
         btn_post.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Thread(networkPost).start();
+                if(netConnect()){
+                    new Thread(networkPost).start();
+                }else{
+                    Toast.makeText(NetLogin.this,"请确保网络通畅",Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -146,16 +176,34 @@ public class NetLogin extends Activity {
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3){
                 switch (arg2){
                     case 0:
-                        tv_result.setText("正在加载中···\n若15S内无反应，请检查网络后重试");
-                        new Thread(everyGet_study_course).start();
                         break;
                     case 1:
-                        tv_result.setText("正在加载中···\n若15S内无反应，请检查网络后重试");
-                        new Thread(everyGet_study_info).start();
+                        if(netConnect()){
+                            tv_result.setText("正在加载中···\n若15S内无反应，请检查网络后重试");
+                            new Thread(everyGet_study_course).start();
+                        }else{
+                            Toast.makeText(NetLogin.this,"请确保网络通畅",Toast.LENGTH_SHORT).show();
+                        }
                         break;
                     case 2:
-                        tv_result.setText("正在加载中···\n若15S内无反应，请检查网络后重试");
-                        new Thread(everyGet_study_score).start();
+                        if(netConnect()){
+                            tv_result.setText("正在加载中···\n若15S内无反应，请检查网络后重试");
+                            new Thread(everyGet_study_info).start();
+                        }else{
+                            Toast.makeText(NetLogin.this,"请确保网络通畅",Toast.LENGTH_SHORT).show();
+                        }
+                        break;
+                    case 3:
+                        if(netConnect()){
+                            Calendar cd = Calendar.getInstance();
+                            SimpleDateFormat sdf = new SimpleDateFormat("EEE%20MMM%20dd%20yyyy%20HH:mm:ss%20'GMT'+0800%20", Locale.US);
+                            sdf.setTimeZone(TimeZone.getTimeZone("GMT+8:00")); // 设置时区为GMT
+                            timestamp= sdf.format(cd.getTime());
+                            tv_result.setText("正在加载中···\n若15S内无反应，请检查网络后重试");
+                            new Thread(everyGet_study_score).start();
+                        }else{
+                            Toast.makeText(NetLogin.this,"请确保网络通畅",Toast.LENGTH_SHORT).show();
+                        }
                         break;
                     default:
                         break;
@@ -178,7 +226,7 @@ public class NetLogin extends Activity {
             String val = data.getString("value");
 
             //正则表达式匹配出token
-            Pattern patternName = Pattern.compile(regex);
+            Pattern patternName = Pattern.compile(regex_token);
             Matcher mName = patternName.matcher(val);
             if(mName.find()){
                 token=mName.group();
@@ -197,6 +245,17 @@ public class NetLogin extends Activity {
                     new AlertDialog.Builder(NetLogin.this).setTitle("源代码")
                             .setMessage(val)
                             .setPositiveButton("确定",null).show();
+                    break;
+                case 3:
+                    Pattern pattern = Pattern.compile(regex_score);
+                    Matcher name = pattern.matcher(val);
+                    val="";
+                    int i=0;
+                    while (name.find()) {
+                        i++;
+                        val=val+name.group(1)+"\t"+name.group(2)+"\t"+name.group(3)+"\t"+name.group(4)+"\t"+name.group(5)+"\t"+name.group(6)+"\t"+name.group(7)+"\t"+name.group(8)+"\t"+name.group(9)+"\t"+name.group(10)+"\n\n";
+                    }
+                    tv_result.setText("共"+i+"门课程\n\n"+val);
                     break;
             }
         }
@@ -269,7 +328,7 @@ public class NetLogin extends Activity {
     };
 
     Runnable everyGet_study_score = new Runnable() {
-        public void run() {everythingGet_study(url_score[0]+token+url_score[1]);
+        public void run() {everythingGet_study(url_score[0]+token+url_score[1]+timestamp+url_score[2]);
         }
     };
 
@@ -370,7 +429,7 @@ public class NetLogin extends Activity {
         Message msg = new Message();
         Bundle data = new Bundle();
         data.putString("value", resultc);
-        data.putInt("flag", 1);
+        data.putInt("flag", 3);
         msg.setData(data);
         handler.sendMessage(msg);
     }
@@ -432,6 +491,15 @@ public class NetLogin extends Activity {
         return outstream.toByteArray();
     }
 
+    public boolean netConnect(){
+        ConnectivityManager cm=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo net=cm.getActiveNetworkInfo();
+        if(net!=null&&net.isAvailable()){
+            return true;
+        }
+        return false;
+    }
+
     @Override
     protected void onStop() {
         //获取Shared Preference对象
@@ -440,6 +508,8 @@ public class NetLogin extends Activity {
         setinfo.edit()
                 .putString("STUDYNUM",et_user.getText().toString())
                 .putString("PASSWORD",et_pwd.getText().toString())
+                .putString("COOKIE",COOKIE)
+                .putString("TOKEN",token)
                 .commit();
         super.onStop();
     }
