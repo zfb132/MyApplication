@@ -254,7 +254,6 @@ public class NetLogin extends Activity {
                     if(val.equals("")){
                         if(flag_connect_login<=3){
                             new Thread(networkPost).start();
-                            System.out.println("登录"+flag_connect_login+"次");
                         }
                     }
                     tv_result.setText(val);
@@ -271,7 +270,6 @@ public class NetLogin extends Activity {
                             if(val.equals("")){
                                 if(flag_connect_course<=3){
                                     new Thread(everyGet_study_course).start();
-                                    System.out.println("huoqu"+flag_connect_login+"次");
                                 }
                             }
                             Pattern patterna = Pattern.compile(regex_course);
@@ -289,7 +287,11 @@ public class NetLogin extends Activity {
                             if(val.equals("")){
                                 if(flag_connect_info<=3){
                                     new Thread(everyGet_study_info).start();
-                                    System.out.println("huoqu"+flag_connect_login+"次");
+                                }
+                            }else if(val.contains("<font color=\"red\" style=\"font-size: 12px;\">会话超时，请重新登录<label id=\"alertp\"></label></font>")){
+                                //Toast.makeText(NetLogin.this ,"q",Toast.LENGTH_SHORT).show();
+                                if(flag_connect_info<=3){
+                                    new Thread(everyGet_study_info).start();
                                 }
                             }
                             Pattern patternb = Pattern.compile(regex_info);
@@ -313,7 +315,6 @@ public class NetLogin extends Activity {
                             if(val.equals("")){
                                 if(flag_connect_score<=3){
                                     new Thread(everyGet_study_score).start();
-                                    System.out.println("huoqu"+flag_connect_login+"次");
                                 }
                             }
                             Pattern pattern = Pattern.compile(regex_score);

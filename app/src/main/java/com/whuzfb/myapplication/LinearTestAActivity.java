@@ -296,8 +296,6 @@ public class LinearTestAActivity extends Activity {
         });
 
 
-
-
         if(needPermissionForBlocking(getApplicationContext())) {
             Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
             startActivity(intent);
