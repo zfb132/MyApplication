@@ -75,10 +75,18 @@ public class NetLogin extends Activity {
     private ImageView img_checkcode;
     private Bitmap bm_checkCode;
     private boolean flag_checkcode;
+    private int flag_search=0;
+    private int flag_connect_checkcode=0;
+    private int flag_connect_course=0;
+    private int flag_connect_score=0;
+    private int flag_connect_info=0;
+    private int flag_connect_login=0;
     private String COOKIE;
     private String token;
+    private String regex_info="<tr>\\s*<th[ \"0-9a-z=%]{0,20}>(.{0,200})</td>\\s*</tr>";
     private String regex_token="&csrftoken=([\\S]{36})";
     private String regex_score="<td>([0-9]{8,14})</td>\\s*<td>([ 0-9A-Z\\u4E00-\\u9FA5\\uff08\\uff09\\u0020]{4,20})</td>\\s*<td>([\\u4E00-\\u9FA5]{4})</td>\\s*<td>([0-9\\.]{3})</td>\\s*<td>([\\u4E00-\\u9FA5\\?]{2,3})</td>\\s*<td>([\\u4E00-\\u9FA5]{3,8})</td>\\s*<td>([\\u4E00-\\u9FA5]{2,3})</td>\\s*<td>([0-9]{4})</td>\\s*<td>([\\u4E00-\\u9FA5]{1})</td>\\s*<td>([0-9\\.]{4})</td>";
+    private String regex_course="var lessonName = \"([0-9\\u4E00-\\u9FA5\\u002c\\uff08\\uff09\\u003b\\-]+)\";//[\\u4E00-\\u9FA5]{3}\\s*var day = \"([0-9]{1})\";//\\s*var.{49}\\s*var beginWeek = \"([0-9]{1,2})\";//[\\u4E00-\\u9FA5\\uff0c]{11}\\s*var endWeek = \"([0-9]{1,2})\";//[\\u4E00-\\u9FA5\\uff0c]{11}\\s*var classNote = \"([ 0-9\\-A-Z\\u4E00-\\u9FA5]{0,10})\";\\s*var beginTime = \"([0-9]{1,2})\";//[\\u4E00-\\u9FA5\\uff0c]{12}\\s*var endTime = \"([0-9]{1,2})\";//[\\u4E00-\\u9FA5\\uff0c]{12}\\s*var detail=\"([0-9\\u4E00-\\u9FA5\\u002c\\u003b\\-]+)\";//[\\u4E00-\\u9FA5]{7}\\s*var classRoom = \"([0-9\\-\\u4E00-\\u9FA5]{1,8})?\";//[\\u4E00-\\u9FA5]{2}\\s*var weekInterVal= \"([0-9]{1})\";//[\\u4E00-\\u9FA5]{5}\\s*var teacherName = \"([\u003f\\u4E00-\\u9FA5]{2,3})\";//[\\u4E00-\\u9FA5]{4}\\s*var professionName = \"([\\u4E00-\\u9FA5]{2,3})\";//[\\u4E00-\\u9FA5]{4}\\s*var planType = \"([\u003f\\u4E00-\\u9FA5]{4})\";\\s*var credit = \"([0-9\\.]{3})\";//[\\u4E00-\\u9FA5]{4}\\s*var areaName = \"([0-9\\u4E00-\\u9FA5]{2,3})?\";\\s*var.{20}\\s*var academicTeach = \"([\\u4E00-\\u9FA5]{3,10})\";\\s*var grade = \"([0-9]{4})?\";\\s*var classNote = \"[ 0-9\\-A-Z\\u4E00-\\u9FA5]{0,10}?\";\\s*var note = \"([ 0-9\\-A-Z\\u4E00-\\u9FA5]{1,20})?\";\\s*var state = \"([ 0-9]{1})\";";
     private String url_webcode;
     private String[] url_score={"http://210.42.121.241/servlet/Svlt_QueryStuScore?csrftoken=","&year=0&term=&learnType=&scoreFlag=0&t=","(%D6%D0%B9%FA%B1%EA%D7%BC%CA%B1%BC%E4)"};
     private String timestamp="";
@@ -161,6 +169,7 @@ public class NetLogin extends Activity {
             @Override
             public void onClick(View v) {
                 if(netConnect()){
+                    flag_connect_login=0;
                     new Thread(networkPost).start();
                 }else{
                     Toast.makeText(NetLogin.this,"请确保网络通畅",Toast.LENGTH_SHORT).show();
@@ -179,6 +188,8 @@ public class NetLogin extends Activity {
                         break;
                     case 1:
                         if(netConnect()){
+                            flag_connect_course=0;
+                            flag_search=1;
                             tv_result.setText("正在加载中···\n若15S内无反应，请检查网络后重试");
                             new Thread(everyGet_study_course).start();
                         }else{
@@ -187,6 +198,8 @@ public class NetLogin extends Activity {
                         break;
                     case 2:
                         if(netConnect()){
+                            flag_connect_info=0;
+                            flag_search=2;
                             tv_result.setText("正在加载中···\n若15S内无反应，请检查网络后重试");
                             new Thread(everyGet_study_info).start();
                         }else{
@@ -195,6 +208,8 @@ public class NetLogin extends Activity {
                         break;
                     case 3:
                         if(netConnect()){
+                            flag_connect_score=0;
+                            flag_search=3;
                             Calendar cd = Calendar.getInstance();
                             SimpleDateFormat sdf = new SimpleDateFormat("EEE%20MMM%20dd%20yyyy%20HH:mm:ss%20'GMT'+0800%20", Locale.US);
                             sdf.setTimeZone(TimeZone.getTimeZone("GMT+8:00")); // 设置时区为GMT
@@ -208,17 +223,13 @@ public class NetLogin extends Activity {
                     default:
                         break;
                 }
-                //textview_thirdA.setText(adapter.getItem(arg2));
-                //arg0.setVisibility(View.VISIBLE);
             }
             public void onNothingSelected(AdapterView<?>arg0){
-                //textview_thirdA.setText("未选择");
-                //arg0.setVisibility(View.VISIBLE);
             }
-
         });
     }
 
+    //更新UI一般要放在handle里面
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -232,13 +243,20 @@ public class NetLogin extends Activity {
                 token=mName.group();
                 token=token.replaceAll("&csrftoken=","");
             }
-            //tv_result.setText(val.replaceAll("\\n\\n\\n", ""));
+            //以下代码用于判断在教务系统网站要进行的事情
             switch (data.getInt("flag")){
                 case 0:
                     tv_result.setText(val.replaceAll("\\n\\n\\n", ""));
                     img_checkcode.setImageBitmap(bm_checkCode);
                     break;
                 case 1:
+                    flag_connect_login++;
+                    if(val.equals("")){
+                        if(flag_connect_login<=3){
+                            new Thread(networkPost).start();
+                            System.out.println("登录"+flag_connect_login+"次");
+                        }
+                    }
                     tv_result.setText(val);
                     break;
                 case 2:
@@ -247,15 +265,70 @@ public class NetLogin extends Activity {
                             .setPositiveButton("确定",null).show();
                     break;
                 case 3:
-                    Pattern pattern = Pattern.compile(regex_score);
-                    Matcher name = pattern.matcher(val);
-                    val="";
-                    int i=0;
-                    while (name.find()) {
-                        i++;
-                        val=val+name.group(1)+"\t"+name.group(2)+"\t"+name.group(3)+"\t"+name.group(4)+"\t"+name.group(5)+"\t"+name.group(6)+"\t"+name.group(7)+"\t"+name.group(8)+"\t"+name.group(9)+"\t"+name.group(10)+"\n\n";
+                    switch (flag_search){
+                        case 1:
+                            flag_connect_course++;
+                            if(val.equals("")){
+                                if(flag_connect_course<=3){
+                                    new Thread(everyGet_study_course).start();
+                                    System.out.println("huoqu"+flag_connect_login+"次");
+                                }
+                            }
+                            Pattern patterna = Pattern.compile(regex_course);
+                            Matcher namea = patterna.matcher(val);
+                            val="";
+                            int ia=0;
+                            while (namea.find()) {
+                                ia++;
+                                val=val+"\n课程名:"+namea.group(1)+"\n星期"+namea.group(2)+"\n上课时间，从第几周开始："+namea.group(3)+"\n结课时间，第几周结束："+namea.group(4)+"\n班级备注："+namea.group(5)+"\n上课时间，从第几节课开始："+namea.group(6)+"\n下课时间，第几节下课："+namea.group(7)+"\n详细信息："+namea.group(8)+"\n教室："+namea.group(9)+"\n隔几周一次："+namea.group(10)+"\n任课老师："+namea.group(11)+"\n教师职称："+namea.group(12)+"\n课程类型："+namea.group(13)+"\n课程学分："+namea.group(14)+"\n学部："+namea.group(15)+"\n授课学院："+namea.group(16)+"\n年级备注："+namea.group(17)+"\n课程备注："+namea.group(18)+"\n课程状态："+namea.group(19)+"\n\n\n";
+                            }
+                            tv_result.setText("大二下共"+ia+"门课程\n\n"+val);
+                            break;
+                        case 2:
+                            flag_connect_info++;
+                            if(val.equals("")){
+                                if(flag_connect_info<=3){
+                                    new Thread(everyGet_study_info).start();
+                                    System.out.println("huoqu"+flag_connect_login+"次");
+                                }
+                            }
+                            Pattern patternb = Pattern.compile(regex_info);
+                            Matcher nameb = patternb.matcher(val);
+                            val="";
+                            int ib=0;
+                            while (nameb.find()) {
+                                ib++;
+                                val=val+"\n"+nameb.group(1);
+                                System.out.println(val);
+                            }
+                            val=val.replaceAll(" ","");
+                            val=val.replaceAll("width=\"([0-9]{2}%)\"","");
+                            val=val.replaceAll("colspan=\"([0-9]{1})\"","");
+                            val=val.replaceAll("</th><td>",":");
+                            val=val.replaceAll("</td><th>","\n");
+                            tv_result.setText("共"+ib+"条个人信息\n\n"+val);
+                            break;
+                        case 3:
+                            flag_connect_score++;
+                            if(val.equals("")){
+                                if(flag_connect_score<=3){
+                                    new Thread(everyGet_study_score).start();
+                                    System.out.println("huoqu"+flag_connect_login+"次");
+                                }
+                            }
+                            Pattern pattern = Pattern.compile(regex_score);
+                            Matcher name = pattern.matcher(val);
+                            val="";
+                            int i=0;
+                            while (name.find()) {
+                                i++;
+                                val=val+"课程代号："+name.group(1)+"\n课程名："+name.group(2)+"\n课程类型："+name.group(3)+"\n课程学分："+name.group(4)+"\n授课教师："+name.group(5)+"\n授课学院："+name.group(6)+"\n类型："+name.group(7)+"\n年级："+name.group(8)+"\n学期："+name.group(9)+"\n得分："+name.group(10)+"\n\n";
+                            }
+                            tv_result.setText("共"+i+"门课程\n\n"+val);
+                            break;
+                        default:
+                            break;
                     }
-                    tv_result.setText("共"+i+"门课程\n\n"+val);
                     break;
             }
         }
