@@ -130,6 +130,7 @@
         <service android:name=".FirstLocalService" />
         <service android:name=".MyAudioService" />
         <service android:name=".FloatViewService" />
+        <service android:name=".AppWidgetService" />
 
         <receiver android:name="SmsReceiver">
             <intent-filter>
@@ -156,6 +157,16 @@
             <intent-filter>
                 <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
             </intent-filter>
+        </receiver>
+
+        <receiver android:name=".WidgetCourse" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" >
+                </action>
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_ini" />
         </receiver>
 
     </application>

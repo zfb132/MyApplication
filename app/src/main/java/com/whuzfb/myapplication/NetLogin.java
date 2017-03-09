@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.telephony.TelephonyManager;
@@ -38,6 +39,9 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -131,6 +135,7 @@ public class NetLogin extends Activity {
         et_pwd.setText(password);
 
 
+        createdirs();
 
         btn_sourcecode.setOnClickListener(new OnClickListener() {
             @Override
@@ -281,6 +286,7 @@ public class NetLogin extends Activity {
                                 val=val+"\n课程名:"+namea.group(1)+"\n星期"+namea.group(2)+"\n上课时间，从第几周开始："+namea.group(3)+"\n结课时间，第几周结束："+namea.group(4)+"\n班级备注："+namea.group(5)+"\n上课时间，从第几节课开始："+namea.group(6)+"\n下课时间，第几节下课："+namea.group(7)+"\n详细信息："+namea.group(8)+"\n教室："+namea.group(9)+"\n隔几周一次："+namea.group(10)+"\n任课老师："+namea.group(11)+"\n教师职称："+namea.group(12)+"\n课程类型："+namea.group(13)+"\n课程学分："+namea.group(14)+"\n学部："+namea.group(15)+"\n授课学院："+namea.group(16)+"\n年级备注："+namea.group(17)+"\n课程备注："+namea.group(18)+"\n课程状态："+namea.group(19)+"\n\n\n";
                             }
                             tv_result.setText("大二下共"+ia+"门课程\n\n"+val);
+                            writeData("/sdcard/myWeb/course.txt",val);
                             break;
                         case 2:
                             flag_connect_info++;
@@ -309,6 +315,7 @@ public class NetLogin extends Activity {
                             val=val.replaceAll("</th><td>",":");
                             val=val.replaceAll("</td><th>","\n");
                             tv_result.setText("共"+ib+"条个人信息\n\n"+val);
+                            writeData("/sdcard/myWeb/info.txt",val);
                             break;
                         case 3:
                             flag_connect_score++;
@@ -325,7 +332,9 @@ public class NetLogin extends Activity {
                                 i++;
                                 val=val+"课程代号："+name.group(1)+"\n课程名："+name.group(2)+"\n课程类型："+name.group(3)+"\n课程学分："+name.group(4)+"\n授课教师："+name.group(5)+"\n授课学院："+name.group(6)+"\n类型："+name.group(7)+"\n年级："+name.group(8)+"\n学期："+name.group(9)+"\n得分："+name.group(10)+"\n\n";
                             }
+
                             tv_result.setText("共"+i+"门课程\n\n"+val);
+                            writeData("/sdcard/myWeb/score.txt",val);
                             break;
                         default:
                             break;
@@ -586,6 +595,44 @@ public class NetLogin extends Activity {
                 .putString("TOKEN",token)
                 .commit();
         super.onStop();
+    }
+
+    public void createdirs(){
+        if (checkSDCard()) {
+            File recordPath = Environment.getExternalStorageDirectory();
+            File path = new File(recordPath.getPath() + File.separator + "myWeb");
+            if (!path.exists()) {
+                if (!path.mkdirs()) {
+                    //("创建目录失败", Toast.LENGTH_LONG);
+                    return;
+                }
+            }
+            recordPath = path;
+        } else {
+            //showToast("SD卡未连接", Toast.LENGTH_LONG);
+            return;
+        }
+    }
+    public boolean checkSDCard() {
+        //检测SD卡是否插入手机
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            return true;
+        }
+        return false;
+    }
+
+    public void writeData(String filename,String string){
+        try{
+            //文件输出流，如果目标文件不存在，新建一个；如果已存在，默认覆盖
+            FileOutputStream fileOutputStream=new FileOutputStream(filename);
+            byte[] bytes=string.getBytes();
+            fileOutputStream.write(bytes);
+            fileOutputStream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 

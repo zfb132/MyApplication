@@ -8,11 +8,14 @@ import android.support.annotation.Nullable;
 
 import java.io.IOException;
 
+
 /**
  * Created by zfb15 on 2017/2/7.
  */
 
 public class MyAudioService extends Service {
+
+
     private MediaPlayer mediaPlayer;
     @Nullable
     @Override
@@ -20,8 +23,15 @@ public class MyAudioService extends Service {
         return null;
     }
 
+    //
+    @Override
+    public void onCreate() {
+        super.onCreate();
+    }
+
     @Override
     public void onDestroy() {
+
         super.onDestroy();
         if(mediaPlayer!=null){
             mediaPlayer.release();
