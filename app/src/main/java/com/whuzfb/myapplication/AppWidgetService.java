@@ -35,7 +35,7 @@ public class AppWidgetService extends Service {
     public int t=0;
     public int s=0;
     public String[] weekday;
-    public String temp[]=new String[3];
+    public String temp[]=new String[6];
     @Override
     public void onCreate() {
         super.onCreate();
@@ -67,6 +67,8 @@ public class AppWidgetService extends Service {
         SimpleDateFormat format=new SimpleDateFormat("E");
         Log.d("tag", weekday.length+"");
         switch (format.format(date)){
+            case "周六":temp[t]="今天星期六，好好休息吧！\n点击查看明天课程";t++;
+            case "周日":temp[t]="今天星期日，好好休息吧！\n点击查看明天课程";t++;
             case "周一":
                 for(int i=0;i<weekday.length;i++){
                     if(weekday[i].contains("星期1")){
@@ -124,11 +126,9 @@ public class AppWidgetService extends Service {
         ComponentName provider=new ComponentName(this, WidgetCourse.class);//提供者
         AppWidgetManager manager=AppWidgetManager.getInstance(this);//小部件管理器
         manager.updateAppWidget(provider, views);//更新
-
-        if(s>=3){
+        if(s>=6){
             s=0;
         }
-
         if(temp[s]==null){
             s=0;
         }
