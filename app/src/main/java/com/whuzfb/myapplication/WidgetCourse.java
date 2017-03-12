@@ -155,7 +155,7 @@ public class WidgetCourse extends AppWidgetProvider {
         super.onDisabled(context);
         Log.d("TAG","onDisabled方法调用了");
         //停止MyService
-        //Intent intent = new Intent(context,MyService.class);
+        //Intent intent = new Intent(context,MyService.class);。
         //context.stopService(intent);
     }
 
