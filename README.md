@@ -197,19 +197,17 @@
    ```
    同时在每个module 的build.gradle中添加
    ```java
-   apply plugin: 'retrolambda'
-   
-   android {
-       compileOptions {
-       sourceCompatibility JavaVersion.VERSION_1_8
-       targetCompatibility JavaVersion.VERSION_1_8
-   }
-   
-   retrolambda {
-       jdk System.getenv("JAVA8_HOME")
-       oldJdk System.getenv("JAVA7_HOME")
-       javaVersion JavaVersion.VERSION_1_7
-   }
+   apply plugin: 'retrolambda'  
+   android {  
+       compileOptions {  
+       sourceCompatibility JavaVersion.VERSION_1_8  
+       targetCompatibility JavaVersion.VERSION_1_8  
+   }  
+   retrolambda {  
+       jdk System.getenv("JAVA8_HOME")  
+       oldJdk System.getenv("JAVA7_HOME")  
+       javaVersion JavaVersion.VERSION_1_7  
+   }  
    ```
    >Android Studio 提供Java8 lambdas表带是代码提示支持。如果你对lambdas不熟悉，只需参照以下开始学习吧：
    
@@ -368,33 +366,32 @@
    
    >避免深层次的视图结构有时候为了摆放一个视图，你可能尝试添加另一个LinearLayout。你可能使用这种方法解决：
    ```xml
-   <LinearLayout
+   <LinearLayout>  
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:orientation="vertical"
-       >
+       
+       <RelativeLayout>  
+           <!--...-->  
    
-       <RelativeLayout>
-           ...
+           <LinearLayout>  
+               <!--...-->  
    
-           <LinearLayout>
-               ...
+               <LinearLayout>  
+                   <!--...-->  
    
-               <LinearLayout>
-                   ...
-   
-                   <LinearLayout>
-                       ...
+                   <LinearLayout>  
+                       <!--...-->  
                        
-                   </LinearLayout>
-   
-               </LinearLayout>
-   
-           </LinearLayout>
-   
-       </RelativeLayout>
-   
-   </LinearLayout>
+                   </LinearLayout>  
+     
+               </LinearLayout>  
+     
+           </LinearLayout>  
+     
+       </RelativeLayout>  
+     
+   </LinearLayout>  
    ```
    >即使你没有非常明确的在一个layout布局文件中这样使用，如果你在Java文件中从一个view inflate（这个inflate翻译不过去，大家理解就行） 到其他views当中，也是可能会发生的。
    
