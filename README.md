@@ -369,28 +369,19 @@
    <LinearLayout>  
        android:layout_width="match_parent"
        android:layout_height="match_parent"
-       android:orientation="vertical"
-       
+       android:orientation="vertical"  
        <RelativeLayout>  
-           <!--...-->  
-   
+           <!--...-->   
            <LinearLayout>  
-               <!--...-->  
-   
+               <!--...-->   
                <LinearLayout>  
                    <!--...-->  
-   
                    <LinearLayout>  
-                       <!--...-->  
-                       
+                       <!--...-->                     
                    </LinearLayout>  
-     
                </LinearLayout>  
-     
            </LinearLayout>  
-     
        </RelativeLayout>  
-     
    </LinearLayout>  
    ```
    >即使你没有非常明确的在一个layout布局文件中这样使用，如果你在Java文件中从一个view inflate（这个inflate翻译不过去，大家理解就行） 到其他views当中，也是可能会发生的。
