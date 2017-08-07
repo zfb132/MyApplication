@@ -25,5 +25,8 @@ public class SmsReceiver extends BroadcastReceiver {
             str.append(msms.getDisplayMessageBody());
         }
         Toast.makeText(context,str.toString(),Toast.LENGTH_LONG).show();
+
+        //拦截短信，不让系统接收到，
+        //abortBroadcast();
     }
 }
