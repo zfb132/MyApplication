@@ -107,7 +107,7 @@ deploy:
   # file:
   #   - file1
   #   - file2
-  file: app/build/outputs/apk/app-debug.apk
+  file: app/build/outputs/apk/MyApplication-${TRAVIS_TAG}.apk 
   # 默认情况下Travis CI在完成编译后会清除所有生成的文件，v2版本改名
   cleanup: false
   on:
