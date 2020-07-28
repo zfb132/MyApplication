@@ -1,5 +1,8 @@
 language: android
 
+# 设置系统版本
+os: linux
+
 # 设置JDK版本
 jdk: oraclejdk8
 
@@ -11,8 +14,8 @@ branches:
     # 两个/之间默认解析为正则表达式
     - /v*/
 
-# 关闭sudo执行
-sudo: false
+# 关闭sudo执行，v2版本以及无影响
+# sudo: false
 
 # 指定linux发行版的版本，根据报错信息修改版本
 dist: trusty
@@ -97,7 +100,7 @@ deploy:
   #   # travis后台添加的GitHub Access Token
   #   secure: ${GH_TOKEN}
   # 这是未加密的使用方法
-  github_token: ${GH_TOKEN}
+  token: ${GH_TOKEN}
   # 好像使用上一行配置会报错missing token，大概是bug
   edge: true
   # 要发布的文件，如果是多个文件
@@ -105,8 +108,8 @@ deploy:
   #   - file1
   #   - file2
   file: app/build/outputs/apk/app-debug.apk
-  # 默认情况下Travis CI在完成编译后会清除所有生成的文件
-  skip_cleanup: true
+  # 默认情况下Travis CI在完成编译后会清除所有生成的文件，v2版本改名
+  cleanup: false
   on:
     # tags设置为true表示只有在有tag的情况下才部署，即终端输入以下内容
     # git tag -a v0.0.1-alpha.1 -m "这里是Tag注释"
