@@ -5,8 +5,11 @@ jdk: oraclejdk8
 
 # 只在master分支变动时触发
 branches:
+  # only表示这是安全名单模式，其他都不触发（默认tag也不会触发）
   only:
     - master
+    # 两个/之间默认解析为正则表达式
+    - /v*/
 
 # 关闭sudo执行
 sudo: false
