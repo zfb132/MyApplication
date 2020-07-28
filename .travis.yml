@@ -1,7 +1,7 @@
 language: android
 
 # 设置JDK版本
-jdk: oraclejdk8
+jdk: oraclejdk12
 
 # 只在master分支变动时触发
 branches:
@@ -11,7 +11,7 @@ branches:
 # 关闭sudo执行
 sudo: false
 
-# 指定linux发行版的版本
+# 指定linux发行版的版本，根据报错信息，此发行版目前只支持oraclejdk9--12
 dist: bionic
 
 # 设置环境变量
