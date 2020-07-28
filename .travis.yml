@@ -11,8 +11,8 @@ branches:
 # 关闭sudo执行
 sudo: false
 
-# 指定linux发行版的版本，根据报错信息，此发行版目前只支持oraclejdk9--12
-dist: bionic
+# 指定linux发行版的版本，根据报错信息修改版本
+dist: trusty
 
 # 设置环境变量
 # env:
