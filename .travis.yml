@@ -98,6 +98,8 @@ deploy:
   #   secure: ${GH_TOKEN}
   # 这是未加密的使用方法
   github_token: ${GH_TOKEN}
+  # 好像使用上一行配置会报错missing token，大概是bug
+  edge: true
   # 要发布的文件，如果是多个文件
   # file:
   #   - file1
