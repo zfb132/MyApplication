@@ -92,9 +92,12 @@ deploy:
   # 部署到GitHub Release
   # 除此之外，Travis CI还支持发布到fir.im、AWS、Google App Engine等
   provider: releases
-  api_key:
-    # travis后台添加的GitHub Access Token
-    secure: ${GH_TOKEN}
+  # 此方法是加密后的github token使用
+  # api_key:
+  #   # travis后台添加的GitHub Access Token
+  #   secure: ${GH_TOKEN}
+  # 这是未加密的使用方法
+  github_token: ${GH_TOKEN}
   # 要发布的文件，如果是多个文件
   # file:
   #   - file1
