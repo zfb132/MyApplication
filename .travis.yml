@@ -85,7 +85,6 @@ script:
   - ./gradlew assembleDebug
 
 before_deploy:
-  # version="$(git describe --long --tags | sed 's/^v//;s/-\([0-9]\+\)-g\([0-9a-f]\+\)/+\1.\2/')"
   # 直接使用travis内置环境变量
   - mv app/build/outputs/apk/app-debug.apk app/build/outputs/apk/MyApplication-${TRAVIS_TAG}.apk 
 
