@@ -53,16 +53,16 @@ android:
     # 添加Android Support Repository组件
     - extra-android-m2repository
     - extra-android-support
-  # travis默认接收所有license，但是也可以手动指定允许名单
-  # licenses:
-  #   - 'android-sdk-preview-license-52d11cd2'
-  #   - 'android-sdk-license-.+'
-  #   - 'google-gdk-license-.+'
+    # travis默认接收所有license，但是也可以手动指定允许名单
+    # licenses:
+    #   - 'android-sdk-preview-license-52d11cd2'
+    #   - 'android-sdk-license-.+'
+    #   - 'google-gdk-license-.+'
 
 # 接受以下SDK组件的许可协议：[ConstraintLayout for Android 1.0.2，Solver for ConstraintLayout 1.0.2]
 before_install:
   # 更改时区
-  export TZ='Asia/Shanghai'
+  - export TZ='Asia/Shanghai'
   # -qq表示减少中间步骤的输出，-y表示如果需要用户输入则yes
   # - sudo apt-get -qq -y update
   - mkdir "$ANDROID_HOME/licenses" || true
