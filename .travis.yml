@@ -1,0 +1,108 @@
+language: android
+
+# 设置JDK版本
+jdk: oraclejdk8
+
+# 只在master分支变动时触发
+branches:
+  only:
+    - master
+
+# 关闭sudo执行
+sudo: false
+
+# 指定linux发行版的版本
+dist: bionic
+
+# 设置环境变量
+# env:
+#   - PACKAGE_VERSION="1.0.*"
+
+# 默认禁止第三方库，需要自己手动加
+# addons:
+#   apt:
+#     sources:
+#       - ppa:chris-lea/redis-server
+#     packages:
+#     - redis-tools
+#     - redis-server
+
+# 设置缓存机制，可以保证规定的缓存文件不需要每次下载
+# 但是如果更新Gradle版本等，先清除缓存再跑CI
+before_cache:
+  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+# 缓存的文件夹
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+
+# Android项目的job
+android:
+  components:
+    # 使用工具包
+    # - tools
+    # 使用平台工具
+    # - platform-tools
+    # 构建项目所用的BuildTools版本
+    - build-tools-25.0.0
+    # 用来编译项目的SDK版本
+    - android-25
+    # 添加Android Support Repository组件
+    - extra-android-m2repository
+    - extra-android-support
+  # travis默认接收所有license，但是也可以手动指定允许名单
+  # licenses:
+  #   - 'android-sdk-preview-license-52d11cd2'
+  #   - 'android-sdk-license-.+'
+  #   - 'google-gdk-license-.+'
+
+# 接受以下SDK组件的许可协议：[ConstraintLayout for Android 1.0.2，Solver for ConstraintLayout 1.0.2]
+before_install:
+  # 更改时区
+  export TZ='Asia/Shanghai'
+  # -qq表示减少中间步骤的输出，-y表示如果需要用户输入则yes
+  # - sudo apt-get -qq -y update
+  - mkdir "$ANDROID_HOME/licenses" || true
+  - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
+  - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
+
+
+# 防止无运行权限
+before_script:
+  - chmod +x gradlew
+
+script:
+  # 生成debug apk包
+  - ./gradlew assembleDebug
+
+before_deploy:
+  # version="$(git describe --long --tags | sed 's/^v//;s/-\([0-9]\+\)-g\([0-9a-f]\+\)/+\1.\2/')"
+  # 直接使用travis内置环境变量
+  - mv app/build/outputs/apk/app-debug.apk app/build/outputs/apk/MyApplication-${TRAVIS_TAG}.apk 
+
+
+# 部署：如果需要为github部署，则要生成Personal access tokens
+deploy:
+  # 部署到GitHub Release
+  # 除此之外，Travis CI还支持发布到fir.im、AWS、Google App Engine等
+  provider: releases
+  api_key:
+    # travis后台添加的GitHub Access Token
+    secure: ${GH_TOKEN}
+  # 要发布的文件，如果是多个文件
+  # file:
+  #   - file1
+  #   - file2
+  file: app/build/outputs/apk/app-debug.apk
+  # 默认情况下Travis CI在完成编译后会清除所有生成的文件
+  skip_cleanup: true
+  on:
+    # tags设置为true表示只有在有tag的情况下才部署，即终端输入以下内容
+    # git tag -a v0.0.1-alpha.1 -m "这里是Tag注释"
+    # git push origin --tags
+    tags: true
+    # 设置多个条件
+    # condition: "$CC = gcc"
