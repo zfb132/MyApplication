@@ -1,7 +1,7 @@
 # MyApplication
 这是来自我的Android Studio的Git插件进行同步的  
   
-[![Build Status](https://travis-ci.com/zfb132/MyApplication.svg?branch=master)](https://travis-ci.com/zfb132/MyApplication)  
+![Java](https://img.shields.io/badge/language-Java-orange.svg)  [![Build Status](https://travis-ci.com/zfb132/MyApplication.svg?branch=master)](https://travis-ci.com/zfb132/MyApplication)  
 
 ## 项目背景  
 ### 编写目的  
